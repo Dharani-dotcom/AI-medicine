@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default Deny Catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Medicine Monographs (Allows reading and seeding/updating records)
+    match /medicines/{medicineId} {
+      allow read: if true;
+      allow write: if isValidId(medicineId);
+    }
+
+    // Regulatory Alerts (Allows reading and seeding/updating alerts)
+    match /alerts/{alertId} {
+      allow read: if true;
+      allow write: if isValidId(alertId);
+    }
+
+    // Scans History Ledger
+    match /scans/{scanId} {
+      allow read: if true;
+      allow write: if isValidId(scanId);
+    }
+
+    // Community Reports
+    match /reports/{reportId} {
+      allow read: if true;
+      allow write: if isValidId(reportId);
+    }
+  }
+}

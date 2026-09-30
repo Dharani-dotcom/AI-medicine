@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="108" fill="#0f766e"/>
+  <path d="M256 64 L396 112 C396 260 256 416 256 448 C256 416 116 260 116 112 Z" fill="#115e59" stroke="#ffffff" stroke-width="16" stroke-linejoin="round"/>
+  <!-- Cross and Pill Emblem -->
+  <circle cx="256" cy="240" r="90" fill="#ffffff"/>
+  <path d="M236 170 h40 v50 h50 v40 h-50 v50 h-40 v-50 h-50 v-40 h50 Z" fill="#0f766e"/>
+  <circle cx="256" cy="370" r="14" fill="#5eead4"/>
+</svg>

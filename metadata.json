@@ -1,0 +1,6 @@
+{
+  "name": "PharmaShield AI - Counterfeit Medicine Detection",
+  "description": "Real-time AI smartphone camera inspection & counterfeit medicine authentication with live database verification for Lithosun, Sertraline, and critical pharmaceuticals.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,106 @@
+{
+  "entities": {
+    "Medicine": {
+      "title": "Medicine",
+      "description": "Standard pharmaceutical reference monograph used for automated packaging and physical spec verification",
+      "type": "object",
+      "properties": {
+        "medicineId": { "type": "string", "maxLength": 128 },
+        "medicineName": { "type": "string", "maxLength": 150 },
+        "genericName": { "type": "string", "maxLength": 200 },
+        "strength": { "type": "string", "maxLength": 60 },
+        "dosageForm": { "type": "string", "maxLength": 80 },
+        "manufacturer": { "type": "string", "maxLength": 150 },
+        "packagingInfo": { "type": "string", "maxLength": 1000 },
+        "expectedVisualFeatures": { "type": "string", "maxLength": 1000 },
+        "barcode": { "type": "string", "maxLength": 64 },
+        "exampleBatch": { "type": "string", "maxLength": 64 },
+        "batchFormatRegex": { "type": "string", "maxLength": 128 },
+        "regulatoryInfo": { "type": "string", "maxLength": 500 },
+        "warningInfo": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["medicineId", "medicineName", "genericName", "strength", "manufacturer"]
+    },
+    "ScanRecord": {
+      "title": "ScanRecord",
+      "description": "Smartphone camera inspection record with multi-task explainable AI verification scores",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "timestamp": { "type": "string", "maxLength": 64 },
+        "medicineName": { "type": "string", "maxLength": 150 },
+        "genericName": { "type": "string", "maxLength": 200 },
+        "detectedManufacturer": { "type": "string", "maxLength": 150 },
+        "strength": { "type": "string", "maxLength": 60 },
+        "batchNumber": { "type": "string", "maxLength": 64 },
+        "mfgDate": { "type": "string", "maxLength": 64 },
+        "expiryDate": { "type": "string", "maxLength": 64 },
+        "mrpPrice": { "type": "string", "maxLength": 64 },
+        "barcode": { "type": "string", "maxLength": 128 },
+        "verificationStatus": {
+          "type": "string",
+          "enum": ["VERIFIED_AGAINST_AVAILABLE_DATA", "SUSPICIOUS_REQUIRES_VERIFICATION", "UNABLE_TO_VERIFY"]
+        },
+        "overallSummary": { "type": "string", "maxLength": 1000 },
+        "ocrConfidence": { "type": "number" },
+        "packageSimilarity": { "type": "number" },
+        "medicineIdConfidence": { "type": "number" },
+        "imageQualityScore": { "type": "number" },
+        "rawOcrText": { "type": "string", "maxLength": 2000 },
+        "imageThumbnail": { "type": "string", "maxLength": 200000 },
+        "userId": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["id", "timestamp", "medicineName", "verificationStatus", "userId"]
+    },
+    "CommunityReport": {
+      "title": "CommunityReport",
+      "description": "Community user incident submission for suspect medicine batches",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "medicineName": { "type": "string", "maxLength": 150 },
+        "batchNumber": { "type": "string", "maxLength": 64 },
+        "manufacturer": { "type": "string", "maxLength": 150 },
+        "pharmacyOrLocation": { "type": "string", "maxLength": 200 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "reportedAt": { "type": "string", "maxLength": 64 },
+        "userId": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["id", "medicineName", "batchNumber", "reportedAt", "userId"]
+    },
+    "RegulatoryAlert": {
+      "title": "RegulatoryAlert",
+      "description": "Regulatory recall notices and alert bulletins",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "medicineName": { "type": "string", "maxLength": 150 },
+        "agency": { "type": "string", "maxLength": 150 },
+        "date": { "type": "string", "maxLength": 64 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "riskLevel": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "title", "medicineName", "agency", "date"]
+    }
+  },
+  "firestore": {
+    "/medicines/{medicineId}": {
+      "schema": "Medicine",
+      "description": "Verified reference medicine database monographs"
+    },
+    "/scans/{scanId}": {
+      "schema": "ScanRecord",
+      "description": "User inspection and verification scan history"
+    },
+    "/reports/{reportId}": {
+      "schema": "CommunityReport",
+      "description": "Public community suspect batch reports"
+    },
+    "/alerts/{alertId}": {
+      "schema": "RegulatoryAlert",
+      "description": "Official regulatory counterfeit recall notices"
+    }
+  }
+}
